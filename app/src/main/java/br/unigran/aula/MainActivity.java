@@ -1,29 +1,44 @@
 package br.unigran.aula;
 
+import android.content.ComponentName;
+import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    EditText nome;
-    Button btnOk;
+private ListView lista;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-        nome=findViewById(R.id.campoNome);
-        btnOk = findViewById(R.id.btnOk);
-        btnOk.setOnClickListener(view -> Toast.makeText(getApplicationContext(),"Olá "+nome.getText(),Toast.LENGTH_LONG).show());
+        lista=findViewById(R.id.lista);
+        List dados = new LinkedList();
+        dados.add("Maça");
+        dados.add("Uva");
+        dados.add("Pera");
+        ArrayAdapter<String>adapter=
+                new ArrayAdapter<>(this,R.layout.support_simple_spinner_dropdown_item,dados);
+        lista.setAdapter(adapter);
 
     }
-    public void limpar(View view){
-        nome.setText("");
-        Toast.makeText(this,"Limpo",Toast.LENGTH_LONG).show();
+    public void novoProduto(View view){
+        Intent it = new Intent(this,Segunda.class);
+        startActivityForResult(it);
     }
+
+    private void startActivityForResult(Intent it) {
+
+    }
+
 }
