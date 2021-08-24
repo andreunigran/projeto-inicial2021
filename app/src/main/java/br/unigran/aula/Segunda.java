@@ -1,5 +1,6 @@
 package br.unigran.aula;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -26,7 +27,9 @@ public class Segunda extends AppCompatActivity {
         Produto produto = new Produto();
         produto.setNome(nomeProd.getText().toString());
         produto.setQuantidade(Integer.parseInt(quantidade.getText()+""));
-        setResult(RESULT_OK);
+        Intent it = new Intent();
+        it.putExtra("fruta",nomeProd.getText().toString());
+        setResult(RESULT_OK,it);
         finish();
     }
 }
