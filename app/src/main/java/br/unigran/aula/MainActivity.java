@@ -2,6 +2,7 @@ package br.unigran.aula;
 
 import android.content.ComponentName;
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -34,11 +35,19 @@ private ListView lista;
     }
     public void novoProduto(View view){
         Intent it = new Intent(this,Segunda.class);
-        startActivityForResult(it);
+        startActivityForResult(it,0,null);
     }
 
-    private void startActivityForResult(Intent it) {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+       if(resultCode==RESULT_OK)
+            Toast.makeText(this,"Salvo",Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(this,"Saiu",Toast.LENGTH_SHORT).show();
 
     }
+
 
 }

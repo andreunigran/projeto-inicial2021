@@ -19,13 +19,14 @@ public class Segunda extends AppCompatActivity {
         quantidade=findViewById(R.id.qtdProduto);
     }
     public void cancelar(View view){
+        setResult(RESULT_CANCELED);
         finish();
     }
     public void salvar(View view){
         Produto produto = new Produto();
-        produto.nome=nomeProd.getText();
-        produto.quantidade=Integer.parseInt(quantidade.getText()+"");
-
+        produto.setNome(nomeProd.getText().toString());
+        produto.setQuantidade(Integer.parseInt(quantidade.getText()+""));
+        setResult(RESULT_OK);
         finish();
     }
 }
