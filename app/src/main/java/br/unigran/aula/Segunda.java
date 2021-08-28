@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import br.unigran.crud.Dados;
 import br.unigran.domain.Produto;
 
 public class Segunda extends AppCompatActivity {
@@ -27,9 +28,9 @@ public class Segunda extends AppCompatActivity {
         Produto produto = new Produto();
         produto.setNome(nomeProd.getText().toString());
         produto.setQuantidade(Integer.parseInt(quantidade.getText()+""));
-        Intent it = new Intent();
-        it.putExtra("fruta",nomeProd.getText().toString());
-        setResult(RESULT_OK,it);
+
+        Dados.salvar(produto);
+        setResult(RESULT_OK);
         finish();
     }
 }

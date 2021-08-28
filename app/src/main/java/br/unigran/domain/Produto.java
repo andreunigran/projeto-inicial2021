@@ -9,7 +9,7 @@ public class Produto {
 
     @Override
     public String toString() {
-        return nome+" - " +valor;
+        return nome+" - " + quantidade ;
     }
 
     public String getNome() {

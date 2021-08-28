@@ -16,21 +16,19 @@ import android.widget.Toast;
 import java.util.LinkedList;
 import java.util.List;
 
+import br.unigran.crud.Dados;
+
 public class MainActivity extends AppCompatActivity {
-    private List dados = new LinkedList();
     private ListView lista;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        lista = findViewById(R.id.lista);
-
-        dados.add("Maça");
-        dados.add("Uva");
-        dados.add("Pera");
+        lista= findViewById(R.id.lista);
         ArrayAdapter<String> adapter =
-                new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, dados);
+                new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item,
+                        Dados.getLista());
         lista.setAdapter(adapter);
 
     }
@@ -43,12 +41,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == 201)
             if (resultCode == RESULT_OK) {
-                String texto = data.getStringExtra("fruta");
-                Toast.makeText(this, "Salvo " + texto, Toast.LENGTH_SHORT).show();
-                dados.add(texto);
+                Toast.makeText(this, "Salvo " , Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this, "Saiu", Toast.LENGTH_SHORT).show();
             }
