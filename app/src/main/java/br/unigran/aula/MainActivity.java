@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +18,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import br.unigran.crud.Dados;
+import br.unigran.domain.Produto;
 
 public class MainActivity extends AppCompatActivity {
     private ListView lista;
@@ -26,11 +28,37 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         lista= findViewById(R.id.lista);
+     atualiza();
+
+        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+               Intent it = new Intent(getApplicationContext(),Segunda.class);
+               it.putExtra("Produto", (Produto)Dados.getLista().get(i));
+
+                Produto o=(Produto)Dados.getLista().get(i);
+               /* it.putExtra("nome",o.getNome());
+                it.putExtra("quatidade",o.getQuantidade());*/
+                startActivityForResult(it,201);
+            }
+        });
+
+        lista.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Dados.remove(i);
+
+                atualiza();
+                return true;
+            }
+        });
+    }
+
+    private void atualiza() {
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item,
                         Dados.getLista());
         lista.setAdapter(adapter);
-
     }
 
     public void novoProduto(View view) {

@@ -2,7 +2,9 @@ package br.unigran.domain;
 
 import android.text.Editable;
 
-public class Produto {
+import java.io.Serializable;
+
+public class Produto implements Serializable {
     private String nome;
     private Integer quantidade;
     private Double valor;

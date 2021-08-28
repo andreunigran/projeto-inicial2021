@@ -5,16 +5,22 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Dados {
-    private static List  dados = new LinkedList();
+    private static final List  dados = new LinkedList();
     private Dados(){
     }
     public static void salvar(Object o){
-        dados.add(o);
+        if(dados.contains(o))
+            dados.set(dados.indexOf(o),o);
+        else dados.add(o);
     }
     public static void salvar(Collection o){
         dados.addAll(o);
     }
     public static List getLista(){
        return dados;
+    }
+
+    public static void remove(int i) {
+        dados.remove(i);
     }
 }

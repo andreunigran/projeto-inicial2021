@@ -9,4 +9,5 @@
   <string name="vazio" />
     <string name="cancelar">Cancelar</string>
     <string name="salvar">Salvar</string>
+    <string name="remover">Remover</string>
 </resources>
