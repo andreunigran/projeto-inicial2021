@@ -1,5 +1,6 @@
 package br.unigran.domain;
 
+import android.graphics.Bitmap;
 import android.text.Editable;
 
 import java.io.Serializable;
@@ -8,6 +9,7 @@ public class Produto implements Serializable {
     private String nome;
     private Integer quantidade;
     private Double valor;
+    private Bitmap imagem;
 
     @Override
     public String toString() {
@@ -36,5 +38,13 @@ public class Produto implements Serializable {
 
     public void setValor(Double valor) {
         this.valor = valor;
+    }
+
+    public Bitmap getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(Bitmap imagem) {
+        this.imagem = imagem;
     }
 }
