@@ -8,13 +8,14 @@ import br.unigran.domain.Produto;
 
 public class Dados {
     private static final List  dados = new LinkedList();
+    private static Integer count=1;
     private Dados(){
     }
     public static void salvar(Produto o){
         if(dados.contains(o)) {
             dados.set(dados.indexOf(o), o);
         }else{
-            o.setId(dados.size()+1);
+            o.setId(count++);
             dados.add(o);
         }
     }
