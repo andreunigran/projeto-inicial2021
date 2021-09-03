@@ -2,6 +2,7 @@ package br.unigran.aula;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.camera2.CameraMetadata;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
@@ -11,6 +12,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 
 import br.unigran.crud.Dados;
 import br.unigran.domain.Produto;
@@ -38,7 +42,8 @@ public class Segunda extends AppCompatActivity {
             nomeProd.setText(produto.getNome());
             quantidade.setText(produto.getQuantidade().toString());
             if(produto.getImagem()!=null)
-              foto.setImageBitmap(produto.getImagem());
+              foto.setImageBitmap(BitmapFactory.
+                      decodeByteArray(produto.getImagem(),0,produto.getImagem().length));
         }else{
                 produto = new Produto();
 
@@ -47,7 +52,8 @@ public class Segunda extends AppCompatActivity {
     }
     public void cancelar(View view){
         setResult(RESULT_CANCELED);
-        finish();
+        //finish();
+        onBackPressed();
     }
     public void salvar(View view){
 
@@ -56,6 +62,7 @@ public class Segunda extends AppCompatActivity {
         Dados.salvar(produto);
         setResult(RESULT_OK);
         finish();
+        //onBackPressed();
     }
 
     public void capturaImg(View view){
@@ -70,7 +77,10 @@ public class Segunda extends AppCompatActivity {
         if(requestCode==CameraMetadata.REQUEST_AVAILABLE_CAPABILITIES_BACKWARD_COMPATIBLE){
             if(resultCode==RESULT_OK){
                 Bitmap img= (Bitmap) data.getExtras().get("data");
-                produto.setImagem(img);
+
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                img.compress(Bitmap.CompressFormat.PNG,100,stream);
+                produto.setImagem(stream.toByteArray());
                 foto.setImageBitmap(img);
 
 

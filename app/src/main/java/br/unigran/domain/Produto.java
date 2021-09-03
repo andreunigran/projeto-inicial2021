@@ -4,12 +4,15 @@ import android.graphics.Bitmap;
 import android.text.Editable;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Objects;
 
 public class Produto implements Serializable {
     private String nome;
     private Integer quantidade;
     private Double valor;
-    private Bitmap imagem;
+    private Integer id;
+    private byte[] imagem;
 
     @Override
     public String toString() {
@@ -40,11 +43,28 @@ public class Produto implements Serializable {
         this.valor = valor;
     }
 
-    public Bitmap getImagem() {
+    public byte[] getImagem() {
         return imagem;
     }
 
-    public void setImagem(Bitmap imagem) {
+    public void setImagem(byte[] imagem) {
         this.imagem = imagem;
     }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Produto produto = (Produto) o;
+        return Objects.equals(id, produto.id);
+    }
+
 }

@@ -22,7 +22,7 @@ import br.unigran.domain.Produto;
 
 public class MainActivity extends AppCompatActivity {
     private ListView lista;
-
+    ArrayAdapter<String> adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,10 +55,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void atualiza() {
-        ArrayAdapter<String> adapter =
-                new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item,
-                        Dados.getLista());
-        lista.setAdapter(adapter);
+        if(adapter==null){
+            adapter =
+                    new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item,
+                            Dados.getLista());
+            lista.setAdapter(adapter);
+        }else
+            adapter.notifyDataSetChanged();
     }
 
     public void novoProduto(View view) {
@@ -71,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 201)
             if (resultCode == RESULT_OK) {
+               atualiza();
                 Toast.makeText(this, "Salvo " , Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this, "Saiu", Toast.LENGTH_SHORT).show();
