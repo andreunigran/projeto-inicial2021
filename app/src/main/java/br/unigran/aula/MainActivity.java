@@ -2,6 +2,7 @@ package br.unigran.aula;
 
 import android.content.ComponentName;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -17,16 +18,21 @@ import android.widget.Toast;
 import java.util.LinkedList;
 import java.util.List;
 
+import br.unigran.crud.CriaBD;
 import br.unigran.crud.Dados;
+import br.unigran.crud.ManipulaBD;
 import br.unigran.domain.Produto;
 
 public class MainActivity extends AppCompatActivity {
     private ListView lista;
     ArrayAdapter<String> adapter;
+    CriaBD cria;
+    ManipulaBD db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        db=new ManipulaBD(getApplicationContext());
         lista= findViewById(R.id.lista);
      atualiza();
 
@@ -55,13 +61,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void atualiza() {
-        if(adapter==null){
             adapter =
-                    new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item,
-                            Dados.getLista());
+                    new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item,
+                            db.getProdutos());
             lista.setAdapter(adapter);
-        }else
-            adapter.notifyDataSetChanged();
     }
 
     public void novoProduto(View view) {
