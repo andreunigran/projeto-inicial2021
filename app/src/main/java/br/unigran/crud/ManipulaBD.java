@@ -23,21 +23,26 @@ public class ManipulaBD {
         ContentValues contentValues = new ContentValues();
         contentValues.put("nome", produto.getNome());
         contentValues.put("quantidade", produto.getQuantidade());
-        return database.insertOrThrow("produto", null, contentValues);
+
+        return produto.getId()>0?
+     database.update("produto",contentValues, "id=?", new String[]{produto.getId()+""})
+                :
+         database.insertOrThrow("produto", null, contentValues);
     }
 
     public List<Produto> getProdutos() {
         List<Produto> retorno = new LinkedList<>();
         CriaBD criaBD = new CriaBD(context);
         SQLiteDatabase database = criaBD.getReadableDatabase();
-        Cursor cursor = database.query("produto", new String[]{"nome", "quantidade"},
+        Cursor cursor = database.query("produto", new String[]{"id","nome", "quantidade"},
                 null, null,
                 null, null, null, null);
         if (cursor.moveToFirst()) {
             do {
                 Produto p = new Produto();
-                p.setNome(cursor.getString(0));
-                p.setQuantidade(cursor.getInt(1));
+                p.setId(cursor.getInt(0));
+                p.setNome(cursor.getString(1));
+                p.setQuantidade(cursor.getInt(2));
                 retorno.add(p);
             } while (cursor.moveToNext());
         }
@@ -45,5 +50,11 @@ public class ManipulaBD {
     return retorno;
     }
 
-
+    public Integer remover(Produto produto) {
+        CriaBD criaBD = new CriaBD(context);
+        SQLiteDatabase database = criaBD.getWritableDatabase();
+        String[] argumentos = {produto.getId() + ""};
+        return database.delete("produto","id=?",
+                argumentos );
+    }
 }

@@ -25,8 +25,8 @@ import br.unigran.domain.Produto;
 
 public class MainActivity extends AppCompatActivity {
     private ListView lista;
+    private List<Produto> dados;
     ArrayAdapter<String> adapter;
-    CriaBD cria;
     ManipulaBD db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +40,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                Intent it = new Intent(getApplicationContext(),Segunda.class);
-               it.putExtra("Produto", (Produto)Dados.getLista().get(i));
+               //it.putExtra("Produto", (Produto)Dados.getLista().get(i));
+                it.putExtra("Produto", dados.get(i));
 
-                Produto o=(Produto)Dados.getLista().get(i);
+               // Produto o=(Produto)Dados.getLista().get(i);
                /* it.putExtra("nome",o.getNome());
                 it.putExtra("quatidade",o.getQuantidade());*/
                 startActivityForResult(it,201);
@@ -52,8 +53,8 @@ public class MainActivity extends AppCompatActivity {
         lista.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Dados.remove(i);
-
+                //Dados.remove(i);
+                db.remover(dados.get(i));
                 atualiza();
                 return true;
             }
@@ -61,9 +62,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void atualiza() {
+        dados =db.getProdutos();
             adapter =
                     new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item,
-                            db.getProdutos());
+                           dados );
             lista.setAdapter(adapter);
     }
 
