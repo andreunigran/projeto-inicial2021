@@ -24,7 +24,7 @@ public class ManipulaBD {
         contentValues.put("nome", produto.getNome());
         contentValues.put("quantidade", produto.getQuantidade());
 
-        return produto.getId()>0?
+        return produto.getId()!=null&&produto.getId()>0?
      database.update("produto",contentValues, "id=?", new String[]{produto.getId()+""})
                 :
          database.insertOrThrow("produto", null, contentValues);

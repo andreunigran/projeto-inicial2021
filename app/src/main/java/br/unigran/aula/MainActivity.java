@@ -7,6 +7,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -22,9 +24,11 @@ import br.unigran.crud.CriaBD;
 import br.unigran.crud.Dados;
 import br.unigran.crud.ManipulaBD;
 import br.unigran.domain.Produto;
+import br.unigran.util.ProdutoAdapter;
 
 public class MainActivity extends AppCompatActivity {
     private ListView lista;
+    private RecyclerView recyclerView;
     private List<Produto> dados;
     ArrayAdapter<String> adapter;
     ManipulaBD db;
@@ -34,6 +38,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         db=new ManipulaBD(getApplicationContext());
         lista= findViewById(R.id.lista);
+        recyclerView=findViewById(R.id.listaR);
+        //gerenciar layout
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);//seta layout
      atualiza();
 
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -67,6 +75,10 @@ public class MainActivity extends AppCompatActivity {
                     new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item,
                            dados );
             lista.setAdapter(adapter);
+
+        ProdutoAdapter produtoAdapter = new ProdutoAdapter(dados);
+        recyclerView.setAdapter(produtoAdapter);
+
     }
 
     public void novoProduto(View view) {
